@@ -21,11 +21,21 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    # Step 3: Compile Java files inside src/car/ using javac
+    # Step 3: Compile Java files in src/car/ using javac
     - name: Compile Java files
       run: javac -d out src/car/*.java
 
-    # Step 4: Run the main Java class (replace 'MainClass' with your actual main class name)
+    # Step 4: Run the main Java application that processes the files
     - name: Run Java application
       run: java -cp out car.MainClass
+
+    # Optional: If there's a specific output file you want to check, add a step to verify its existence
+    - name: Verify Output File
+      run: |
+        if [ -f "output.txt" ]; then
+          echo "Output file created successfully."
+        else
+          echo "Output file not found."
+          exit 1
+        fi
 
