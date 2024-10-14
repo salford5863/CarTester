@@ -1,13 +1,8 @@
-name: Java Maven CI
+name: Java Compile and Run
 
-# Run the workflow on push to the main branch and on pull requests
+# Run the workflow on every push to any branch
 on:
   push:
-    branches: 
-      - main
-  pull_request:
-    branches: 
-      - main
 
 jobs:
   build:
@@ -26,24 +21,11 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    # Step 3: Cache Maven dependencies to speed up build times
-    - name: Cache Maven dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven
+    # Step 3: Compile Java files inside src/car/ using javac
+    - name: Compile Java files
+      run: javac -d out src/car/*.java
 
-    # Step 4: Build the project with Maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    # Step 5: Run tests with Maven
-    - name: Run tests
-      run: mvn test
-
-    # Step 6: Create a JAR file for your application
-    - name: Package the JAR file
-      run: mvn package
+    # Step 4: Run the main Java class (replace 'MainClass' with your actual main class name)
+    - name: Run Java application
+      run: java -cp out car.MainClass
 
