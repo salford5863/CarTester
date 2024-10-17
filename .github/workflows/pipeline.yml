@@ -1,14 +1,24 @@
-name: Hello World Bash Workflow
+name: Nginx Installation and Version Check
 
 on: 
   push:
     branches: 
-      - main  # Trigger this action when pushing to the main branch
+      - main  # Run on pushes to the main branch (you can change this)
 
 jobs:
-  hello_world:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+  nginx-setup:
+    runs-on: ubuntu-latest  # Use an Ubuntu environment
+
     steps:
-      - name: Print Hello World
-        run: echo "Hello World"
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Update and Install Nginx
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y nginx
+
+    - name: Check Nginx Version
+      run: |
+        nginx -v 2>&1
 
