@@ -1,0 +1,14 @@
+name: Hello World Bash Workflow
+
+on: 
+  push:
+    branches: 
+      - main  # Trigger this action when pushing to the main branch
+
+jobs:
+  hello_world:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    steps:
+      - name: Print Hello World
+        run: echo "Hello World"
+
